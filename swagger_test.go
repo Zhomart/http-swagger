@@ -231,6 +231,13 @@ func TestConfigURL(t *testing.T) {
     // Some plugin
   });`),
 		},
+		{
+			desc: "configure ScriptSrcs",
+			exp: &Config{
+				ScriptSrcs: []string{`/scripts/helper.js`},
+			},
+			cfgfn: ScriptSrc(`/scripts/helper.js`),
+		},
 	}
 
 	for _, fix := range fixtures {
@@ -335,6 +342,8 @@ func TestUIConfigOptions(t *testing.T) {
 
 <script src="./swagger-ui-bundle.js"> </script>
 <script src="./swagger-ui-standalone-preset.js"> </script>
+<script src="./a.js"> </script>
+<script src="./b.js"> </script>
 <script>
 `
 	ftr := `
@@ -353,6 +362,7 @@ func TestUIConfigOptions(t *testing.T) {
 				DocExpansion:         "list",
 				DomID:                "swagger-ui",
 				PersistAuthorization: false,
+				ScriptSrcs:           []string{"./a.js", "./b.js"},
 			},
 			exp: `window.onload = function() {
   
@@ -396,6 +406,7 @@ func TestUIConfigOptions(t *testing.T) {
 					"SomePlugin",
 					"AnotherPlugin",
 				},
+				ScriptSrcs: []string{"./a.js", "./b.js"},
 				UIConfig: map[template.JS]template.JS{
 					"showExtensions":        "true",
 					"onComplete":            `() => { window.ui.setBasePath('v3'); }`,

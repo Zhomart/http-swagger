@@ -29,6 +29,10 @@ func main() {
 	r.Get("/swagger/*", httpSwagger.Handler(
 		httpSwagger.BeforeScript("console.log('before 1')"),
 		httpSwagger.BeforeScript("console.log('before 2')"),
+		httpSwagger.ScriptSrc("https://unpkg.com/htm@3.1.1/dist/htm.js"),
+		httpSwagger.ScriptSrc("https://unpkg.com/react@17.0.2/umd/react.production.min.js"),
+		httpSwagger.ScriptSrc("/static/myplugin.js"),
+		httpSwagger.Plugins([]string{"MyPlugin"}),
 		httpSwagger.URL("http://localhost:1323/swagger/doc.json"), //The url pointing to API definition
 	))
 
